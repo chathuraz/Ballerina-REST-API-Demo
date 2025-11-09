@@ -53,7 +53,21 @@ jobs:
     - name: Test Docker Image
       run: |
         docker run -d -p 8080:8080 --name test-container wso2-ballerina-service
-        sleep 10
+        echo "Waiting for container to start..."
+        sleep 15
+        
+        # Wait up to 60 seconds for service to be ready
+        for i in {1..12}; do
+          if curl -f http://localhost:8080/hello; then
+            echo "Service is ready!"
+            break
+          fi
+          echo "Attempt $i: Service not ready yet, waiting..."
+          sleep 5
+        done
+        
+        # Final test
         curl -f http://localhost:8080/hello || exit 1
+        
         docker stop test-container
         docker rm test-container
