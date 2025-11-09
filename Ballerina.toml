@@ -1,0 +1,8 @@
+[package]
+org = "wso2"
+name = "test_sample"
+version = "0.1.0"
+
+[build]
+# Ballerina language version (keep empty so local bal tooling decides)
+# langVersion = "2201.8.0"

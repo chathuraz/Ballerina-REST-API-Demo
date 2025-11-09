@@ -1,0 +1,11 @@
+# Docker
+target/
+*.jar
+
+# Dependencies
+Dependencies.toml
+
+# OS
+Thumbs.db
+Desktop.ini
+.DS_Store

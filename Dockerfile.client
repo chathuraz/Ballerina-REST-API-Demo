@@ -1,0 +1,10 @@
+# Client Dockerfile
+FROM ballerina/ballerina:2201.12.10
+
+WORKDIR /app
+
+# Copy client source
+COPY src/client/client.bal .
+
+# Run the client
+CMD ["bal", "run", "client.bal"]

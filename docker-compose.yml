@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: wso2-ballerina-service
+    ports:
+      - "8080:8080"
+    environment:
+      - BAL_LOG_LEVEL=INFO
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/hello"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
+    restart: unless-stopped
+
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.client
+    container_name: wso2-ballerina-client
+    depends_on:
+      service:
+        condition: service_healthy
+    environment:
+      - SERVICE_URL=http://service:8080
